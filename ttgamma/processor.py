@@ -522,7 +522,7 @@ class TTGammaProcessor(processor.ProcessorABC):
         phoCategoryLoose = np.ones(len(events))
 
         # PART 2B: Uncomment to begin implementing photon categorization
-        """
+        
         if self.isMC:
             #### Photon categories, using pdgID of the matched gen particle for the leading photon in the event
             # reco photons matched to a generated photon
@@ -536,13 +536,13 @@ class TTGammaProcessor(processor.ProcessorABC):
             # 2. DEFINE VARIABLES
             # define the photon categories for tight photon events
             # a genuine photon is a reconstructed photon which is matched to a generator level photon, and does not have a hadronic parent
-            isGenPho = ??
+            isGenPho = matchedPho & ~hadronicParent
             # a hadronic photon is a reconstructed photon which is matched to a generator level photon, but has a hadronic parent
-            isHadPho = ??
+            isHadPho = matchedPho & hadronicParent
             # a misidentified electron is a reconstructed photon which is matched to a generator level electron
-            isMisIDele = ??
+            isMisIDele = matchedEle
             # a hadronic/fake photon is a reconstructed photon that does not fall within any of the above categories and has at least one photon
-            isHadFake = ??  & (ak.num(leadingPhoton)==1)
+            isHadFake =  ~(isMisIDele | isGenPho | isHadPho) & (ak.num(leadingPhoton)==1)
 
             #define integer definition for the photon category axis 
             phoCategory = 1*isGenPho + 2*isMisIDele + 3*isHadPho + 4*isHadFake
@@ -558,17 +558,17 @@ class TTGammaProcessor(processor.ProcessorABC):
             #####
             # 2. DEFINE VARIABLES
             # a genuine photon is a reconstructed photon which is matched to a generator level photon, and does not have a hadronic parent
-            isGenPhoLoose = ??
+            isGenPhoLoose = matchedPhoLoose & ~hadronicParentLoose
             # a hadronic photon is a reconstructed photon which is matched to a generator level photon, but has a hadronic parent
-            isHadPhoLoose = ??
+            isHadPhoLoose = matchedPhoLoose & hadronicParentLoose
             # a misidentified electron is a reconstructed photon which is matched to a generator level electron
-            isMisIDeleLoose = ??
+            isMisIDeleLoose = matchedEleLoose
             # a hadronic/fake photon is a reconstructed photon that does not fall within any of the above categories and has at least one loose photon
-            isHadFakeLoose = ?? & (ak.num(leadingPhotonLoose)==1)        
+            isHadFakeLoose =  ~(isMisIDeleLoose | isGenPhoLoose | isHadPhoLoose) & (ak.num(leadingPhotonLoose)==1)        
 
             #define integer definition for the photon category axis
             phoCategoryLoose = 1*isGenPhoLoose + 2*isMisIDeleLoose + 3*isHadPhoLoose + 4*isHadFakeLoose            
-        """
+        
 
         ################
         # EVENT WEIGHTS
