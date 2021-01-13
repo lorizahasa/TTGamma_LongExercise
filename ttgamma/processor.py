@@ -435,7 +435,7 @@ class TTGammaProcessor(processor.ProcessorABC):
         #                                            have no electrons
         #                                            have no loose muons
         #                                            have no loose electrons
-        muon_eventSelection = ((muTrigger & passOverlapRemoval & oneMuon & eleVeto & looseMuonVeto & looseElectronVeto)
+        muon_eventSelection = (muTrigger & passOverlapRemoval & oneMuon & eleVeto & looseMuonVeto & looseElectronVeto)
 
         # electron selection, requires events to pass:   electron trigger
         #                                                overlap removal
@@ -458,9 +458,9 @@ class TTGammaProcessor(processor.ProcessorABC):
         #add two jet selection criteria
         #   First, 'jetSel' which selects events with at least 4 tightJet and at least one bTaggedJet
         nJets = 4
-        selection.add('jetSel', tightJet >=4 & bTaggedJet>=1) 
+        selection.add('jetSel', (ak.num(tightJet) >= nJets) & (ak.num(bTaggedJet) >= 1)) 
         #   Second, 'jetSel_3j0t' which selects events with at least 3 tightJet and exactly zero bTaggedJet
-        selection.add('jetSel_3j0t', tightJet >=3 & bTaggedJet==0) 
+        selection.add('jetSel_3j0t', (ak.num(tightJet) >= 3)     & (ak.num(bTaggedJet) == 0)) 
 
         # add selection for events with exactly 0 tight photons
         selection.add('zeroPho', ak.num(tightPhoton)==0)
@@ -477,7 +477,7 @@ class TTGammaProcessor(processor.ProcessorABC):
         ##################
 
         # PART 2A: Uncomment to begin implementing event variables
-        """
+        
         # 2. DEFINE VARIABLES
         ## Define M3, mass of 3-jet pair with highest pT
         # find all possible combinations of 3 tight jets in the events 
@@ -510,8 +510,8 @@ class TTGammaProcessor(processor.ProcessorABC):
         if ak.all(ak.num(mugammaPairs)==0):
             mugammaMass = np.ones((len(events),1))*-1
         else:
-            mugammaMass = ??
-        """
+            mugammaMass = (mugammaPairs.pho + mugammaPairs.mu).mass
+        
 
         ###################
         # PHOTON CATEGORIES
