@@ -15,5 +15,6 @@ sed -i '40s/.*/VIRTUAL_ENV="$(cd "$(dirname "$(dirname "${BASH_SOURCE[0]}" )")" 
 sed -i '1s/#!.*python$/#!\/usr\/bin\/env python/' $NAME/bin/*
 sed -i "2a source ${LCG}/setup.sh" $NAME/bin/activate
 sed -i "4a source ${LCG}/setup.csh" $NAME/bin/activate.csh
+
 ipython kernel install --user --name=$NAME
 tar -zcf ${NAME}.tar.gz ${NAME}

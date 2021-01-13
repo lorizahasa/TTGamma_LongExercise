@@ -20,7 +20,6 @@ from .utils.genParentage import maxHistoryPDGID
 import os.path
 cwd = os.path.dirname(__file__)
 
-
 taggingEffLookup = util.load(f'{cwd}/utils/taggingEfficienciesDenseLookup.coffea')
 
 bJetScales = BTagScaleFactor(f"{cwd}/ScaleFactors/Btag/DeepCSV_2016LegacySF_V1.btag.csv","MEDIUM")
@@ -140,7 +139,6 @@ class TTGammaProcessor(processor.ProcessorABC):
         output['EventCount'] = len(events)
 
         dataset = events.metadata['dataset']
-        datasetFull = dataset+'_2016'
         
         rho = events.fixedGridRhoFastjetAll
 
@@ -593,6 +591,11 @@ class TTGammaProcessor(processor.ProcessorABC):
             # calculate pileup weights and variations
             # use the puLookup, puLookup_Up, and puLookup_Down lookup functions to find the nominal and up/down systematic weights
             # the puLookup dictionary is called with the full dataset name (datasetFull) and the number of true interactions (Pileup.nTrueInt)
+            datasetFull = dataset+'_2016' # Name for pileup lookup includes the year
+            if not datasetFull in puLookup:
+                print("WARNING : Using TTGamma_SingleLept_2016 pileup distribution instead of {}".format(datasetFull))
+                datasetFull = "TTGamma_SingleLept_2016"
+
             puWeight = ?
             puWeight_Up = ?
             puWeight_Down = ?
@@ -711,12 +714,15 @@ class TTGammaProcessor(processor.ProcessorABC):
         # PART 4: SYSTEMATICS
         # uncomment the full list after systematics have been implemented        
         #systList = ['noweight','nominal','puWeightUp','puWeightDown','muEffWeightUp','muEffWeightDown','eleEffWeightUp','eleEffWeightDown','btagWeightUp','btagWeightDown','ISRUp', 'ISRDown', 'FSRUp', 'FSRDown', 'PDFUp', 'PDFDown', 'Q2ScaleUp', 'Q2ScaleDown']
-
-        if not self.jetSyst=='nominal':
-            systList=[self.jetSyst]
-
-        if not self.isMC:
-            systList = ['noweight']
+        systList = []
+        if self.isMC:
+            if self.jetSyst == 'nominal':
+                systList = ['nominal','muEffWeightUp','muEffWeightDown','eleEffWeightUp','eleEffWeightDown','ISRUp', 'ISRDown', 'FSRUp', 'FSRDown', 'PDFUp', 'PDFDown', 'Q2ScaleUp', 'Q2ScaleDown','puWeightUp','puWeightDown','btagWeightUp','btagWeightDown']
+                #systList = ["nominal"]
+            else:
+                systList=[self.jetSyst]
+        else:
+            systList = ["noweight"]
 
         #Fill temp hist for testing purposes
 #        output['all_photon_pt'].fill(dataset=dataset,
