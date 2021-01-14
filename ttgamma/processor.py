@@ -714,7 +714,7 @@ class TTGammaProcessor(processor.ProcessorABC):
 
         # PART 4: SYSTEMATICS
         # uncomment the full list after systematics have been implemented        
-        systList = ['noweight','nominal','puWeightUp','puWeightDown','muEffWeightUp','muEffWeightDown','eleEffWeightUp','eleEffWeightDown','btagWeightUp','btagWeightDown','ISRUp', 'ISRDown', 'FSRUp', 'FSRDown', 'PDFUp', 'PDFDown', 'Q2ScaleUp', 'Q2ScaleDown']
+        #systList=['noweight','nominal','puWeightUp','puWeightDown','muEffWeightUp','muEffWeightDown','eleEffWeightUp','eleEffWeightDown','btagWeightUp','btagWeightDown','ISRUp', 'ISRDown', 'FSRUp', 'FSRDown', 'PDFUp', 'PDFDown', 'Q2ScaleUp', 'Q2ScaleDown']
         systList = []
         if self.isMC:
             if self.jetSyst == 'nominal':
