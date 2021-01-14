@@ -56,6 +56,7 @@ else:
     #    mcType = "MC"
 
     # Define mapping for running on condor
+    
     mc_group_mapping = {
         "MCTTGamma": [key for key in fileset if "TTGamma" in key], 
         "MCTTbar1l": ["TTbarPowheg_Semilept", "TTbarPowheg_Hadronic"],
@@ -72,36 +73,38 @@ else:
 
     pprint(job_fileset)
 
-    output = processor.run_uproot_job(job_fileset,
-                                      treename           = 'Events',
-                                      processor_instance = TTGammaProcessor(isMC=True),
-                                      executor           = processor.futures_executor, #processor.futures_executor,
-                                      executor_args      = {'schema': NanoAODSchema, 'workers': args.workers, 'status': not args.condor},#{'workers': 4, 'flatten': True},
-                                      chunksize          = args.chunksize,
-                                      maxchunks          = args.maxchunks
-                                  )
+    for jetSyst in ['nominal','JERUp','JERDown','JESUp','JESDown']:
+        tstart = time.time()
+        output = processor.run_uproot_job(job_fileset,
+                                          treename           = 'Events',
+                                          processor_instance = TTGammaProcessor(isMC=True),
+                                          executor           = processor.futures_executor, #processor.futures_executor,
+                                          executor_args      = {'schema': NanoAODSchema, 'workers': args.workers, 'status': not args.condor},#{'workers': 4, 'flatten': True},
+                                          chunksize          = args.chunksize,
+                                          maxchunks          = args.maxchunks
+                                      )
 
-    elapsed = time.time() - tstart
-    print("Total time: %.1f seconds"%elapsed)
-    print("Total rate: %.1f events / second"%(output['EventCount'].value/elapsed))
+        elapsed = time.time() - tstart
+        print("Total time: %.1f seconds"%elapsed)
+        print("Total rate: %.1f events / second"%(output['EventCount'].value/elapsed))
 
-    #util.save(output, f"output{args.mcGroup}_ttgamma_condorFull_4jet.coffea")
+        #util.save(output, f"output{args.mcGroup}_ttgamma_condorFull_4jet.coffea")
 
-    # Compute original number of events for normalization
-    output['InputEventCount'] = processor.defaultdict_accumulator(int)
-    lumi_sfs = {}
-    for dataset_name, dataset_files in job_fileset.items():
-        for filename in dataset_files:
-            with uproot.open(filename) as fhandle:
-                output['InputEventCount'][dataset_name] +=fhandle["hEvents"].values()[2] - fhandle["hEvents"].values()[0]
+        # Compute original number of events for normalization
+        output['InputEventCount'] = processor.defaultdict_accumulator(int)
+        lumi_sfs = {}
+        for dataset_name, dataset_files in job_fileset.items():
+            for filename in dataset_files:
+                with uproot.open(filename) as fhandle:
+                    output['InputEventCount'][dataset_name] +=fhandle["hEvents"].values()[2] - fhandle["hEvents"].values()[0]
 
-        # Calculate luminosity scale factor
-        lumi_sfs[dataset_name] = crossSections[dataset_name] * lumis[2016] / output["InputEventCount"][dataset_name]
+            # Calculate luminosity scale factor
+            lumi_sfs[dataset_name] = crossSections[dataset_name] * lumis[2016] / output["InputEventCount"][dataset_name]
 
-    for key, obj in output.items():
-        if isinstance(obj, hist.Hist):
-            obj.scale(lumi_sfs, axis="dataset")
-    util.save(output, f"output{args.mcGroup}_ttgamma_condorFull_4jet.coffea")
+        for key, obj in output.items():
+            if isinstance(obj, hist.Hist):
+                obj.scale(lumi_sfs, axis="dataset")
+        util.save(output, f"output{args.mcGroup}_ttgamma_condorFull_4jet_{jetSyst}.coffea")
 
 
 

@@ -18,7 +18,11 @@ fileset = {
 
     "DYjetsM10to50"                : [f"{prefix}/DYjetsM10to50_2016_skim.root"],
     "DYjetsM50"                    : [f"{prefix}/DYjetsM50_ext1_2016_skim_1of5.root", f"{prefix}/DYjetsM50_ext1_2016_skim_2of5.root", f"{prefix}/DYjetsM50_ext1_2016_skim_3of5.root", f"{prefix}/DYjetsM50_ext1_2016_skim_4of5.root", f"{prefix}/DYjetsM50_ext1_2016_skim_5of5.root", f"{prefix}/DYjetsM50_ext2_2016_skim_1of5.root", f"{prefix}/DYjetsM50_ext2_2016_skim_2of5.root", f"{prefix}/DYjetsM50_ext2_2016_skim_3of5.root", f"{prefix}/DYjetsM50_ext2_2016_skim_4of5.root", f"{prefix}/DYjetsM50_ext2_2016_skim_5of5.root"],
-    "GJets_HT100To200"             : [f"{prefix}/GJets_HT100To200_2016_skim.root", f"{prefix}/GJets_HT100To200_ext1_2016_skim.root", f"{prefix}/GJets_HT200To400_2016_skim.root", f"{prefix}/GJets_HT200To400_ext1_2016_skim.root", f"{prefix}/GJets_HT400To600_2016_skim.root", f"{prefix}/GJets_HT400To600_ext1_2016_skim.root", f"{prefix}/GJets_HT40To100_2016_skim.root", f"{prefix}/GJets_HT40To100_ext1_2016_skim.root", f"{prefix}/GJets_HT600ToInf_2016_skim.root", f"{prefix}/GJets_HT600ToInf_ext1_2016_skim.root"],
+    "GJets_HT40To100"              : [f"{prefix}/GJets_HT40To100_2016_skim.root", f"{prefix}/GJets_HT40To100_ext1_2016_skim.root"],
+    "GJets_HT100To200"             : [f"{prefix}/GJets_HT100To200_2016_skim.root", f"{prefix}/GJets_HT100To200_ext1_2016_skim.root"],
+    "GJets_HT200To400"             : [f"{prefix}/GJets_HT200To400_2016_skim.root", f"{prefix}/GJets_HT200To400_ext1_2016_skim.root"],
+    "GJets_HT400To600"             : [f"{prefix}/GJets_HT400To600_2016_skim.root", f"{prefix}/GJets_HT400To600_ext1_2016_skim.root"],
+    "GJets_HT600ToInf"             : [f"{prefix}/GJets_HT600ToInf_2016_skim.root", f"{prefix}/GJets_HT600ToInf_ext1_2016_skim.root"],
     "QCD_Pt1000toInf_Mu"           : [f"{prefix}/QCD_Pt1000toInf_Mu_2016_skim.root", f"{prefix}/QCD_Pt1000toInf_Mu_ext1_2016_skim.root"],
     "QCD_Pt120to170_Ele"           : [f"{prefix}/QCD_Pt120to170_Ele_2016_skim.root", f"{prefix}/QCD_Pt120to170_Ele_ext1_2016_skim.root", ],
     "QCD_Pt120to170_Mu"            : [f"{prefix}/QCD_Pt120to170_Mu_2016_skim.root"],
@@ -74,7 +78,7 @@ fileset = {
     "WGamma"                       : [f"{prefix}/WGamma_2016_skim.root"],
     "WW"                           : [f"{prefix}/WW_2016_skim.root", f"{prefix}/WW_ext1_2016_skim.root"],
     "WZ"                           : [f"{prefix}/WZ_2016_skim.root", f"{prefix}/WZ_ext1_2016_skim.root"],
-    "ZGamma"                       : [f"{prefix}/ZGamma_01J_5f_lowMass_2016_skim.root"],
+    "ZGamma_01J_5f_lowMass"        : [f"{prefix}/ZGamma_01J_5f_lowMass_2016_skim.root"],
     "ZZ"                           : [f"{prefix}/ZZ_2016_skim.root", f"{prefix}/ZZ_ext1_2016_skim.root"],
 }
 

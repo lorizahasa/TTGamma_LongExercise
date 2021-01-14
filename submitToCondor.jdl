@@ -14,8 +14,8 @@ Log    = condorOutputs/coffeaOutput_$(cluster)_$(process).condor
 request_cpus = 2
 request_memory = 8000
 
-Arguments = "Data"
-Queue 1
+#Arguments = "Data"
+#Queue 1
 Arguments = "MCTTGamma"
 Queue 1
 Arguments = "MCTTbar1l"
